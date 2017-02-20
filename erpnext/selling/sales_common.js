@@ -341,12 +341,12 @@ erpnext.selling.SellingController = erpnext.TransactionController.extend({
 	calculate_net_weight_total: function() {
 		var me = this;
 		this.frm.doc.pkg_net_weight = 0.0;
-
+		this.frm.doc.pkg_net_weight_uom = "Kg";
 		$.each(this.frm.item_doclist, function(i, item) {
 			me.frm.doc.pkg_net_weight += item.qty * item.net_weight;
 		});
 
-		frappe.model.round_floats_in(this.frm.doc, ["pkg_net_weight"]);
+		frappe.model.round_floats_in(this.frm.doc, ["pkg_net_weight"], ["pkg_net_weight_uom"]);
 	},
 
 	calculate_totals: function() {

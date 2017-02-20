@@ -22,7 +22,7 @@
 				</span></p>
 			{% } %}
 			{% if(doc.net_weight) { %}
-				<b>Net Weight : </b><span>{%= doc.net_weight %}</span> 
+				<b>Net Weight : </b><span>{%= doc.net_weight %}</span> Kg
 			{% } %}
 			{% include "templates/form_grid/includes/visible_cols.html" %}
 			{% if(in_list(["Sales Order Item", "Sales Invoice Item", "Delivery Note Item", "Purchase Order Item"],doc.doctype)){ %}
