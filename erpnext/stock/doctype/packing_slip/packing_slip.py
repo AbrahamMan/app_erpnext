@@ -22,7 +22,7 @@ class PackingSlip(Document):
 		self.validate_items_mandatory()
 		self.validate_case_nos()
 		self.validate_qty()
-		self.set_total_qty()
+		# self.set_total_qty()
 
 		from erpnext.utilities.transaction_base import validate_uom_is_integer
 		validate_uom_is_integer(self, "stock_uom", "qty")
@@ -164,10 +164,17 @@ class PackingSlip(Document):
 		self.update_item_details()
 
 	def set_total_qty(self):
-		# total_qty = 0
-		# for item in self.get("item_details"):
-		# 	total_qty = total_qty + item.qty
 		self.total_quantity = sum(item.qty for item in self.get("item_details"))
+
+	def set_shipping_address(self):
+		shipTo = frappe.db.get_value("Address",self.shipping_address_name,"*")
+		if shipTo:
+			self.shipping_address = "%s,<br>%s<br>%s" % (shipTo.address_line1, shipTo.city, shipTo.country)
+			# self.shipping_address = """%s,<br>%s,<br>%s,<br>%s %s<br>%s<br>%s""", shipTo.branch, shipTo.address_line1, shipTo.address_line2, shipTo.city, shipTo.state, shipTo.pincode, shipTo.country;
+		
+
+
+
 
 def item_details(doctype, txt, searchfield, start, page_len, filters):
 	from erpnext.controllers.queries import get_match_cond

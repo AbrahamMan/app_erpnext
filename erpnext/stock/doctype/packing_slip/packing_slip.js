@@ -36,6 +36,8 @@ cur_frm.cscript.get_items = function(doc, cdt, cdn) {
 
 cur_frm.cscript.refresh = function(doc, dt, dn) {
 	cur_frm.toggle_display("misc_details", doc.amended_from);
+	cur_frm.cscript.calculate_total_quantity(doc);
+	// cur_frm.cscript.set_shipping_address(doc);
 }
 
 cur_frm.cscript.validate = function(doc, cdt, cdn) {
@@ -85,7 +87,25 @@ cur_frm.cscript.validate_duplicate_items = function(doc, ps_detail) {
 		}
 	}
 }
+cur_frm.cscript.calculate_total_quantity = function(doc) {
+	return this.frm.call({
+		doc: this.frm.doc,
+		method: "set_total_qty",
+		callback: function(r) {
+			// if(!r.exc) cur_frm.refresh();
+		}
+	});
+}
 
+cur_frm.cscript.set_shipping_address = function(doc){
+	return this.frm.call({
+		doc: this.frm.doc,
+		method: "set_shipping_address",
+		callback: function(r) {
+			// if(!r.exc) cur_frm.refresh();
+		}
+	});
+}
 
 // Calculate Net Weight of Package
 cur_frm.cscript.calc_net_total_pkg = function(doc, ps_detail) {
